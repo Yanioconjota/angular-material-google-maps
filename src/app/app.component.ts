@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { ProgressBarMode } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,7 @@ export class AppComponent {
 
   @Input()
   color: ThemePalette;
-  title = 'mapas';
+  
+  @Input()
+  mode: ProgressBarMode;
 }
