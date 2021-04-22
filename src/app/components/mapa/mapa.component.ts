@@ -13,8 +13,8 @@ export class MapaComponent implements OnInit {
 
   marcadores: Marcador[] = [];
 
-  lat = 51.678418;
-  lng = 7.809007;
+  lat = 34.0971117;
+  lng = -118.35786938667297;
 
   constructor(private snackBar: MatSnackBar,
               public dialog: MatDialog) {
@@ -22,16 +22,19 @@ export class MapaComponent implements OnInit {
 
     // this.marcadores.push(nuevoMarcador);
 
-    if (localStorage.getItem('marcadores')) {
-      this.marcadores = JSON.parse(localStorage.getItem('marcadores'));
-    }
+    if (!localStorage.getItem('marcadores') || localStorage.getItem('marcadores') === '[]') {
+      const nuevoMarcador = new Marcador(this.lat, this.lng);
+      this.marcadores.push(nuevoMarcador);
+      this.guardarStorage();
+    } 
+    this.marcadores = JSON.parse(localStorage.getItem('marcadores'));
   }
 
   ngOnInit(): void {
   }
 
   agregarMarcador(evento) {
-    console.log(evento);
+    console.log('evento:', evento);
     const coords: { lat: number, lng: number } = evento.coords;
     const nuevoMarcador = new Marcador(coords.lat, coords.lng);
     this.marcadores.push(nuevoMarcador);
@@ -60,7 +63,14 @@ export class MapaComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       //this.marcadores = result;
-      console.log(result)
+      // console.log(result)
+      if (!result) {
+        return;
+      }
+
+      marcador.titulo = result.titulo;
+      marcador.desc = result.desc;
+      this.snackBar.open('Marcador actualizado 📍✏️', 'Cerrar', { duration: 3000 });
     });
   }
 
