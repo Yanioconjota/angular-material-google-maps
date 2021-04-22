@@ -28,18 +28,20 @@ export class MapaComponent implements OnInit {
 
   agregarMarcador(evento) {
     console.log(evento);
-
     const coords: { lat: number, lng: number } = evento.coords;
-
     const nuevoMarcador = new Marcador(coords.lat, coords.lng);
-
     this.marcadores.push(nuevoMarcador);
-
     this.guardarStorage();
   }
 
   guardarStorage() {
     localStorage.setItem('marcadores', JSON.stringify(this.marcadores));
+  }
+
+  borrarMarcador(i: number){
+    console.log(i);
+    this.marcadores.splice(i, 1);
+    this.guardarStorage();
   }
 
 }
