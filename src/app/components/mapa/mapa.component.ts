@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Marcador } from 'src/app/classes/marcador.class';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-mapa',
@@ -13,7 +14,7 @@ export class MapaComponent implements OnInit {
   lat = 51.678418;
   lng = 7.809007;
 
-  constructor() {
+  constructor(private snackBar: MatSnackBar) {
     // const nuevoMarcador = new Marcador(51.678418, 7.809007);
 
     // this.marcadores.push(nuevoMarcador);
@@ -32,6 +33,7 @@ export class MapaComponent implements OnInit {
     const nuevoMarcador = new Marcador(coords.lat, coords.lng);
     this.marcadores.push(nuevoMarcador);
     this.guardarStorage();
+    this.snackBar.open('Marcador agregado 📍✔️', 'Cerrar', { duration: 3000 });
   }
 
   guardarStorage() {
@@ -42,6 +44,7 @@ export class MapaComponent implements OnInit {
     console.log(i);
     this.marcadores.splice(i, 1);
     this.guardarStorage();
+    this.snackBar.open('Marcador eliminado 📍❌', 'Cerrar', { duration: 3000 });
   }
 
 }
